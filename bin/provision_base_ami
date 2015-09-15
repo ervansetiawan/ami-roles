@@ -57,7 +57,7 @@ fi
 # If AMI id not provided determine what to fetch.
 # That would be either the latest snapshot or stable
 if [[ ! "$AMI_PARENT" == ami-* ]]; then
-  AMI_ID=$(etcdctl -C=${ETCD_PEERS} get /aws/amis/$AMI_PARENT/$REGION/latest/$AMI_PARENT_RELEASE/amiid)
+  AMI_ID="ami-d5c5d1e5"
 else
   AMI_ID=$AMI_PARENT
 fi
