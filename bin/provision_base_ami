@@ -7,9 +7,9 @@ AMI_PROFILES=($(ls *.yml))
 # Timestamp for image
 DATE=$(date +%Y-%m-%d-%H-%M)
 # VPC to launch instance in
-VPC_ID=
+VPC_ID=vpc-68aaee0d
 # Security group to launch provisioned instance with
-SECURITY_GROUP_ID=
+SECURITY_GROUP_ID=sg-a759dbc3
 # Subnet ID to launch instance in (Required in VPC)
 SUBNET_ID=
 # Region to launch instance in
