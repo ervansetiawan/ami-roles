@@ -9,9 +9,9 @@ DATE=$(date +%Y-%m-%d-%H-%M)
 # VPC to launch instance in
 VPC_ID=vpc-68aaee0d
 # Security group to launch provisioned instance with
-SECURITY_GROUP_ID=sg-a759dbc3
+SECURITY_GROUP_ID=sg-a1b230c5
 # Subnet ID to launch instance in (Required in VPC)
-SUBNET_ID=
+SUBNET_ID=subnet-1544c94c
 # Region to launch instance in
 REGION=us-west-2
 # Instance type http://www.ec2instances.info/
