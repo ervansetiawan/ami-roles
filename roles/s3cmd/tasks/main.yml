@@ -1,9 +1,0 @@
----
-
-# https://github.com/s3tools/s3cmd
-- name: Install s3cmd
-  command: pip install --install-option="--install-scripts=/usr/bin" s3cmd
-  tags:
-  - system
-  - build
-  - s3cmd

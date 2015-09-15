@@ -1,5 +1,0 @@
----
-
-terraform_version: 0.5.1
-terraform_url: https://dl.bintray.com/mitchellh/terraform/terraform_{{ terraform_version }}_linux_amd64.zip
-

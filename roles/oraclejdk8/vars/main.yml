@@ -10,6 +10,6 @@ jdk_version: 8u45
 jdk_url: http://download.oracle.com/otn-pub/java/jdk/8u45-b14/jdk-8u45-linux-x64.tar.gz
 
 # FS vars
-java_root: "{{ kenzanmedia_apps }}/java"
+java_root: "{{ cumulus_apps }}/java"
 java_home: "{{ java_root }}/jdk8"
 java_default: "{{ java_root }}/default"

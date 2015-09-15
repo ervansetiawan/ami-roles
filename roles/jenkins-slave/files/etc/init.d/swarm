@@ -1,0 +1,78 @@
+#!/bin/bash
+#
+# Jenkins swarm startup script
+#
+# chkconfig: 2345 86 84
+# description: swarm daemon
+# processname: swarm
+# pidfile: /var/run/swarm.pid
+#
+### BEGIN INIT INFO
+# Provides: swarm
+# Required-Start: $local_fs $remote_fs $network $named
+# Required-Stop: $local_fs $remote_fs $network
+# Short-Description: start and stop swarm daeomon
+# Description: Swarm is a Java client used to connect to a remote Jenkins host
+### END INIT INFO
+
+
+# Redhat init.d
+. /etc/rc.d/init.d/functions
+
+#### Config Foo
+name=swarm
+SWARM_USER=jenkins
+DAEMON=/usr/bin/$name
+PIDFILE=/var/lib/jenkins/$name.pid
+LOG=/var/lib/jenkins/$name.log
+LOCK=/var/lock/subsys/$name
+
+start()
+{
+  # Execute ourself in a background mode
+  runuser $SWARM_USER -c "${0} start_background &"
+  echo -n "Starting Application: "
+  success "Starting Application: "
+  touch $LOCK
+  echo
+}
+
+start_background()
+{
+  export JAVA_OPTS
+  echo "$$" > $PIDFILE
+  exec "$DAEMON" > $LOG
+}
+
+stop()
+{
+if [ -f ${PIDFILE} ]; then
+  kill -9 `cat $PIDFILE`
+  rm -f $PIDFILE
+  rm -f $LOCK
+  echo -n "Stopping Application: "
+  success "Stopping Application: "
+  echo
+fi
+}
+
+case "$1" in
+start)
+  start
+  ;;
+start_background)
+  start_background
+  ;;
+stop)
+  stop
+  ;;
+restart)
+  stop
+  start
+  ;;
+*)
+  echo "Usage $0 {start|stop|restart}"
+  exit 1
+esac
+
+exit 0

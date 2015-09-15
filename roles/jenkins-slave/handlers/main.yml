@@ -1,0 +1,11 @@
+---
+
+- name: restart swarm
+  service: name=swarm state=restarted
+  when: update
+
+- name: start swarm
+  service: name=swarm state=started
+
+- name: stop swarm
+  service: name=swarm state=stopped

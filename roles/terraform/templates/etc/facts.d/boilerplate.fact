@@ -1,3 +1,0 @@
-[terraform]
-role=terraform
-version={{ terraform_version }}

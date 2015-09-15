@@ -8,7 +8,7 @@
   - postrun-config
 
 - name: AMI Profile
-  template: src={{ kenzanmedia_etc }}/ami_profile dest=/{{ kenzanmedia_etc }}/ami_profile owner=root group=root mode=0755
+  template: src={{ cumulus_etc }}/ami_profile dest=/{{ cumulus_etc }}/ami_profile owner=root group=root mode=0755
   tags:
   - config
   - build
@@ -22,7 +22,7 @@
   - postrun-config
 
 - name: Assemble facts
-  assemble: src=/{{ role_local_facts }} dest=/etc/ansible/facts.d/kenzanmedia.fact
+  assemble: src=/{{ role_local_facts }} dest=/etc/ansible/facts.d/cumulus.fact
   tags:
   - config
   - build

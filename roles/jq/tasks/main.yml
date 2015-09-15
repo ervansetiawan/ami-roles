@@ -1,6 +1,0 @@
----
-# roles/jq/tasks/main.yml
-- name: Install jq in /usr/local/bin
-  copy: src=usr/local/bin//jq dest=/usr/local/bin/jq owner=root group=root mode=0755
-  tags: 
-    - build

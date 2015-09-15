@@ -1,10 +1,10 @@
 ---
 
 update: false
-kenzanmedia_apps: opt/kenzanmedia/apps
-kenzanmedia_data: opt/kenzanmedia/data
-kenzanmedia_etc: etc/kenzanmedia
-role_local_facts: "{{ kenzanmedia_etc }}/ansible/facts.d"
-user_data: "/{{ kenzanmedia_etc }}/user_data"
+cumulus_apps: opt/cumulus/apps
+cumulus_data: opt/cumulus/data
+cumulus_etc: etc/cumulus
+role_local_facts: "{{ cumulus_etc }}/ansible/facts.d"
+user_data: "/{{ cumulus_etc }}/user_data"
 
 instance_conf_bin: usr/bin/instance_conf

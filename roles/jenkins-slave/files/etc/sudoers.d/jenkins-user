@@ -1,0 +1,2 @@
+# Rules for Jenkins user
+jenkins  ALL=(ALL)       NOPASSWD: ALL

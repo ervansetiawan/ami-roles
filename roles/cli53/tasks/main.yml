@@ -1,9 +1,0 @@
----
-
-# https://github.com/barnybug/cli53
-- name: Install Route53
-  command: pip install --install-option="--install-scripts=/usr/bin" cli53
-  tags:
-  - system
-  - build
-  - cli53

@@ -1,0 +1,18 @@
+---
+# roles/jenkins-slave/meta/main.yml
+dependencies:
+- devel
+- rpmdevel
+- packer
+- fpm
+- oraclejdk8
+- awsmissingtools
+- jq
+- jenkins-user
+- cassandra-core
+- nodejs
+- gulp
+- bower
+- elasticsearch-pip
+- boto3
+- github_changelog_generator

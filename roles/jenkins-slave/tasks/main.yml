@@ -1,0 +1,60 @@
+---
+
+- name: Sudoers.d for jenkins user
+  copy: src=etc/sudoers.d/jenkins-user dest=/etc/sudoers.d/jenkins-user mode=0440 owner=root group=root
+  tags:
+    - config
+    - jenkins-slave
+    - build
+
+- name: Permit TTY in sudoers
+  lineinfile: dest=/etc/sudoers state=absent regexp='^(.*)Default(.*)requiretty(.*)$' validate='visudo -cf %s'
+  tags:
+    - config
+    - jenkins-slave
+    - build
+
+- name: Create Swarm directory
+  file: dest=/usr/share/swarm/{{ item }} state=directory mode=0755 owner=root group=root
+  with_items:
+    - lib
+    - bin
+  tags:
+    - system
+    - build
+
+- name: Download Swarm Client
+  get_url: url={{ swarm_url }} dest=/usr/share/swarm/lib/swarm-client.jar owner=root group=root mode=0644
+  tags:
+    - system
+    - jenkins-slave
+    - build  
+
+- name: Swarm wrapper
+  copy: src=usr/bin/swarm dest=/usr/bin/swarm owner=root group=root mode=0755
+  tags:
+    - system
+    - jenkins-slave
+    - build
+
+- name: Swarm init.d
+  copy: src=etc/init.d/swarm dest=/etc/init.d/swarm owner=root group=root mode=0755
+  tags:
+    - system
+    - jenkins-slave
+    - build
+
+- name: Swarm sysconfig
+  template: src=etc/sysconfig/swarm dest=/etc/sysconfig/swarm owner=root group=root mode=0644
+  tags:
+    - config
+    - jenkins-slave-config
+    - build
+
+
+# - name: Set cassandra properties 
+#   template: src=etc/cassandra/cassandra.yaml dest=/etc/alternatives/cassandra/cassandra.yaml owner=root group=root mode=0644
+#   tags:
+#   - config
+#   - jenkins-slave-config
+#   - build

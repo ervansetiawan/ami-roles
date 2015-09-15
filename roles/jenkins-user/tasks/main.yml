@@ -3,13 +3,13 @@
 - name: Add group jenkins
   group: name=jenkins gid=498 state=present
   tags:
-  - system
-  - jenkins-user
-  - build
+    - system
+    - jenkins-user
+    - build
 
 - name: Add  user jenkins
   user: name=jenkins comment="Jenkins Continuous Build server" home=/var/lib/jenkins shell=/bin/bash uid=498 group=jenkins groups=jenkins state=present
   tags:
-  - system
-  - jenkins-user
-  - build
+    - system
+    - jenkins-user
+    - build

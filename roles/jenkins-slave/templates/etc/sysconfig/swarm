@@ -1,0 +1,23 @@
+# https://wiki.jenkins-ci.org/display/JENKINS/Swarm+Plugin
+
+# LABEL should be replaced with packer swarm label on boot
+# either in user data or via a launch command
+
+instance_id=$(/opt/aws/bin/ec2-metadata -i|awk '{print $2}')
+
+SWARM_NODE_NAME=LABEL-$instance_id
+
+JAVA_OPTS="-Xmx512m"
+
+SWARM_JAR="/usr/share/swarm/lib/swarm-client.jar"
+
+SWARM_OPTS=" -description LABEL \
+-disableSslVerification \
+-executors 1 \
+-fsroot /var/lib/jenkins \
+-master http://{{ jenkins_dns }}:8080/ \
+-mode exclusive \
+-name $SWARM_NODE_NAME \
+-labels LABEL \
+-password {{ swarm_password }} \
+-username {{ swarm_username}}"

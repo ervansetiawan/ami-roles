@@ -1,5 +1,5 @@
 ---
 
 # https://www.packer.io
-packer_version: 0.7.5
+packer_version: 0.8.3
 packer_url: https://dl.bintray.com/mitchellh/packer/packer_{{ packer_version }}_linux_amd64.zip

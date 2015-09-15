@@ -1,0 +1,5 @@
+#!/bin/bash
+
+. /etc/sysconfig/swarm
+
+java -jar $JAVA_OPTS $SWARM_JAR $SWARM_OPTS

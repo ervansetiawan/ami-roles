@@ -1,4 +1,0 @@
-[jetty8]
-role=jetty8
-jetty_version={{ jetty_version }}
-

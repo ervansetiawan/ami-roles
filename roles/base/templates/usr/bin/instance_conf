@@ -1,8 +1,8 @@
 #!/bin/bash
-# Drop files into {{ kenzanmedia_etc }}/instance_conf.d
+# Drop files into {{ cumulus_etc }}/instance_conf.d
 
 
-for i in `ls /{{ kenzanmedia_etc }}/instance_conf.d`
+for i in `ls /{{ cumulus_etc }}/instance_conf.d`
 do
- source /{{ kenzanmedia_etc }}/instance_conf.d/$i
+ source /{{ cumulus_etc }}/instance_conf.d/$i
 done

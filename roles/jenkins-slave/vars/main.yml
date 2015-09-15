@@ -1,0 +1,16 @@
+---
+# DNS for master on the VPC LAN
+jenkins_dns: ec2-52-27-227-44.us-west-2.compute.amazonaws.com
+
+# https://wiki.jenkins-ci.org/display/JENKINS/Swarm+Plugin
+# 1.16
+swarm_version: 1.26
+swarm_url: http://maven.jenkins-ci.org/content/repositories/releases/org/jenkins-ci/plugins/swarm-client/{{ swarm_version }}/swarm-client-{{ swarm_version }}-jar-with-dependencies.jar
+
+# DNS of Jenkins Master
+# Requires split horizon
+jenkins_master_dns: ec2-52-27-227-44.us-west-2.compute.amazonaws.com
+# jenkins_master_dns: 172.31.17.21
+
+swarm_username: slave
+swarm_password: VXotZLjWHBTmt

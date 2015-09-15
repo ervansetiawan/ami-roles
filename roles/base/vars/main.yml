@@ -1,6 +1,4 @@
 ---
-repos:
-  - kenzanmedia-main.repo
 
 packages:
   - python-pip
@@ -17,14 +15,10 @@ packages:
   - bc
   - git
 
-#to foward syslog to graylog
-graylog_host: graylogger.us-west-2.???
-graylog_port: 9899
-
 # Update only security packages via cron (daily,weekly,monthly,yearly)
 security_update_schedule: weekly
 
 dirs:
   - "/{{ role_local_facts }}"
   - "/etc/ansible/facts.d"
-  - "/{{ kenzanmedia_etc }}/instance_conf.d"
+  - "/{{ cumulus_etc }}/instance_conf.d"

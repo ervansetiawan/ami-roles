@@ -33,15 +33,6 @@
   - security-config
   - base-config
 
-
-- name: MOTD
-  template: src=etc/update-motd.d/30-banner dest=/etc/update-motd.d/30-banner owner=root group=root mode=0755
-  tags:
-  - config
-  - build
-  - base-config
-  - motd
-
 - name: Local Ansible facts
   template: src={{ role_local_facts }}/base.fact dest=/{{ role_local_facts }}/base.fact owner=root group=root mode=0644
   tags:
@@ -58,16 +49,8 @@
   - base
   - instance_conf
 
-- name: Forward syslog to graylog
-  template: src=etc/rsyslog.d/graylog.conf dest=/etc/rsyslog.d/graylog.conf owner=root group=root mode=0644
-  tags:
-  - system
-  - build
-  - base
-  - instance_conf
-
 - name: instance_conf.d
-  template: src={{ kenzanmedia_etc }}/instance_conf.d/00_set_user_data dest=/{{ kenzanmedia_etc }}/instance_conf.d/00_set_user_data owner=root group=root mode=0644
+  template: src={{ cumulus_etc }}/instance_conf.d/00_set_user_data dest=/{{ cumulus_etc }}/instance_conf.d/00_set_user_data owner=root group=root mode=0644
   tags:
   - config
   - build

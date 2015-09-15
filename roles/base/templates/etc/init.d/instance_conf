@@ -25,11 +25,11 @@ LOGFILE=/var/log/instance_config.log
 
 start() {
   if [ -f /usr/bin/instance_conf ]; then
-    if [ ! -f /{{ kenzanmedia_etc }}/instance_config_DO_NOT_REMOVE ]; then
+    if [ ! -f /{{ cumulus_etc }}/instance_config_DO_NOT_REMOVE ]; then
       /usr/bin/instance_conf > $LOGFILE 2>&1
       if [[ $RETVAL -ne 0 ]]; then
-        touch /{{ kenzanmedia_etc }}/instance_config_DO_NOT_REMOVE
-         chattr +i /{{ kenzanmedia_etc }}/instance_config_DO_NOT_REMOVE
+        touch /{{ cumulus_etc }}/instance_config_DO_NOT_REMOVE
+         chattr +i /{{ cumulus_etc }}/instance_config_DO_NOT_REMOVE
       fi
     fi
   else
