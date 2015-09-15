@@ -19,21 +19,31 @@ INSTANCE_TYPE=t2.small
 # Packer file
 PACKER_FILE=base.json
 
-
-# Capture some vars if running outside of Jenkins
-if [[ -z "$AMI_ID" ]]; then
-  read -p "AMI ID (HVM): " AMI_ID
-fi
-
 if [[ -z "$BUILD_NUMBER" ]]; then
+  echo "Missing BUILD_NUMBER"
   read -p "Build Number for this ami: " BUILD_NUMBER
 fi
 
-if [[ -z "$AMI_PROFILE" ]]; then
-  echo -n "AMI Profile to provision " 
-  echo -n ${AMI_PROFILES[@]//\.yml/} ":"
-  read AMI_PROFILE
+if [[ -z "$AMI_PARENT" ]]; then
+  echo "Missing AMI_PARENT"
+  read -p "AMI Profile to draw from : "  AMI_PARENT
 fi
+
+if [[ -z "$AMI_PARENT_RELEASE" ]]; then
+  echo "Missing AMI_PARENT_RELEASE (scratch,stable or snapshot)"
+  read -p "AMI Profile to draw from : "  AMI_PARENT
+fi
+
+if [[ -z "$RELEASE" ]]; then
+  echo "Missing RELEASE"
+  read -p "Release snapshot or stable: " RELEASE
+fi
+
+if [[ -z "$AMI_PROFILE" ]]; then
+  read -p "AMI Profile to provision " AMI_PROFILE
+fi
+
+cd $WORKSPACE
 
 # Log file
 LOG=$BUILD_NUMBER-$AMI_PROFILE.log
@@ -43,6 +53,20 @@ if [ -f AMI-$AMI_PROFILE ]; then
   rm -f AMI-$AMI_PROFILE
 fi
 
+
+# If AMI id not provided determine what to fetch.
+# That would be either the latest snapshot or stable
+if [[ ! "$AMI_PARENT" == ami-* ]]; then
+  AMI_ID=$(etcdctl -C=${ETCD_PEERS} get /aws/amis/$AMI_PARENT/$REGION/latest/$AMI_PARENT_RELEASE/amiid)
+else
+  AMI_ID=$AMI_PARENT
+fi
+
+if [[ -z "$AMI_ID" ]] || [[ ! "$AMI_ID" == ami-* ]]; then
+  exit 1
+fi
+
+AMI_NAME=${AMI_PROFILE}-b${BUILD_NUMBER}_Source-${AMI_ID}_Built-${DATE}
 
 # Run packer
 /usr/bin/packer build \
