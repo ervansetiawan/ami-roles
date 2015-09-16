@@ -57,7 +57,18 @@ fi
 # If AMI id not provided determine what to fetch.
 # That would be either the latest snapshot or stable
 if [[ ! "$AMI_PARENT" == ami-* ]]; then
-  AMI_ID="ami-d5c5d1e5"
+  if [[ "$AMI_PARENT" == 'base']]; then
+    AMI_ID="ami-d5c5d1e5"
+  else
+    # Lookup the latest successful build, and AMI output from the parent profile
+    BUILD_HOST=ec2-52-27-227-44.us-west-2.compute.amazonaws.com
+    AMI_ID=$(curl -s http://${BUILD_HOST}/job/ami-${AMI_PARENT}/lastSuccessfulBuild/artifact/AMI-${AMI_PARENT}/*view*/ \
+    |tail -n1|grep ami|cut -f2 -d':')
+    if [[ ! "$AMI_ID" == *ami-* ]]; then
+      echo "Unable to lookup AMI to launch"
+      exit 1
+    fi
+  fi
 else
   AMI_ID=$AMI_PARENT
 fi
