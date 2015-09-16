@@ -1,0 +1,5 @@
+---
+packages:
+  - ruby
+  - rubygems
+  - ruby-devel
