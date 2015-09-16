@@ -46,9 +46,9 @@
   {
     "type":"powershell",
     "inline":[
-      "Invoke-WebRequest https://www.python.org/ftp/python/2.7.10/python-2.7.10.msi -OutFile C:/Users/packer",
+      "Invoke-WebRequest https://www.python.org/ftp/python/2.7.10/python-2.7.10.msi -OutFile C:/Users/packer/python.msi",
       "msiexec /qn /i C:/Users/packer/python.msi",
-      "Start-Sleep -s 10",
+      "Start-Sleep -s 30",
       "Invoke-WebRequest https://bootstrap.pypa.io/get-pip.py -OutFile C:/Users/packer/get-pip.py",
       "C:/Python27/python.exe C:/Users/packer/get-pip.py",
       "C:/Python27/Scripts/pip.exe install ansible",
