@@ -46,26 +46,26 @@
   {
     "type":"powershell",
     "inline":[
-      "Invoke-WebRequest https://www.python.org/ftp/python/2.7.10/python-2.7.10.msi -OutFile C:/Windows/Temp",
-      "msiexec /qn /i C:/Windows/Temp/python.msi",
+      "Invoke-WebRequest https://www.python.org/ftp/python/2.7.10/python-2.7.10.msi -OutFile C:/Users/packer",
+      "msiexec /qn /i C:/Users/packer/python.msi",
       "Start-Sleep -s 10",
-      "Invoke-WebRequest https://bootstrap.pypa.io/get-pip.py -OutFile C:/Windows/Temp/get-pip.py",
-      "C:/Python27/python.exe C:/Windows/Temp/get-pip.py",
+      "Invoke-WebRequest https://bootstrap.pypa.io/get-pip.py -OutFile C:/Users/packer/get-pip.py",
+      "C:/Python27/python.exe C:/Users/packer/get-pip.py",
       "C:/Python27/Scripts/pip.exe install ansible",
-      "mkdir C:/Windows/Temp/ansible-packer",
-      "mkdir C:/Windows/Temp/ansible-packer/roles"
+      "mkdir C:/Users/packer/ansible-packer",
+      "mkdir C:/Users/packer/ansible-packer/roles"
     ]
   },
   {
     "type": "file",
     "source":"roles/",
-    "destination": "C:/Windows/Temp/ansible-packer/roles"
+    "destination": "C:/Users/packer/ansible-packer/roles"
   },
   {
     "type": "ansible-local",
     "playbook_file": "{{user `ami_profile`}}.yml",
     "group_vars": "group_vars",
-    "staging_directory":"/tmp/ansible-packer"
+    "staging_directory":"C:/Users/packer/ansible-packer"
   }
   ]
 }
