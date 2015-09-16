@@ -3,7 +3,7 @@ write-output "Running User Data Script"
 write-host "(host) Running User Data Script"
 
 cmd.exe /c net user /add packer P@ck3r
-cmd.exe /c net localgroup administrators packer /add
+cmd.exe /c net localgroup "Administrators" packer /add
 
 Set-ExecutionPolicy -ExecutionPolicy bypass -Force
 
