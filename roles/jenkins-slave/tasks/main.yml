@@ -51,10 +51,8 @@
     - jenkins-slave-config
     - build
 
+- name: Enable swarm service
+  service: name=swarm enabled=yes
+  tags: 
+    - build
 
-# - name: Set cassandra properties 
-#   template: src=etc/cassandra/cassandra.yaml dest=/etc/alternatives/cassandra/cassandra.yaml owner=root group=root mode=0644
-#   tags:
-#   - config
-#   - jenkins-slave-config
-#   - build
