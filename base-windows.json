@@ -1,0 +1,71 @@
+{
+  "variables":{
+    "build":"",
+    "ami_profile":"",
+    "job_tag":"",
+    "software_version":"",
+    "hvm_amiid":"",
+    "date":"",
+    "security_group_id":"",
+    "subnet_id":"",
+    "region":"",
+    "vpc_id":"",
+    "instance_type":""
+  },
+"builders":[
+
+{
+  "name":"hvm_builder",
+  "ami_virtualization_type":"hvm",
+  "type": "amazon-ebs",
+  "source_ami": "{{user `hvm_amiid`}}",
+  "ssh_username": "ec2-user",
+  "associate_public_ip_address": "true",
+  "subnet_id":"{{user `subnet_id`}}",
+  "instance_type": "{{user `instance_type`}}",
+  "security_group_id":"{{user `security_group_id`}}",
+  "ssh_timeout":"5m",
+  "ssh_private_ip": "true",
+  "vpc_id":"{{user `vpc_id`}}",
+  "ami_name": "{{user `ami_profile`}}_build-{{user `build`}}_Source-{{user `hvm_amiid`}}_Built-{{user `date`}}",
+  "region":"{{user `region`}}",
+  "tags": {
+    "Name":"{{user `ami_profile`}}-{{user `build`}}",
+    "source":"{{user `hvm_amiid`}}",
+    "virtualization_type":"hvm",
+    "build":"{{user `build`}}",
+    "profile":"{{user `ami_profile`}}",
+    "creator":"packer",
+    "creation_time":"{{user `date`}}"
+  }
+}
+],
+"provisioners":[
+
+  {"type":"shell",
+  "inline":[
+  "sleep 90"
+  ]
+  },
+  {
+    "type":"shell",
+    "inline_shebang":"/bin/bash",
+    "inline":[
+    "sudo pip install ansible",
+    "mkdir -p /tmp/ansible-packer/roles",
+    "sudo chmod 777 /tmp/ansible-packer/roles"
+    ]
+  },
+{
+  "type": "file",
+  "source":"roles/",
+  "destination": "/tmp/ansible-packer/roles"
+},
+{
+  "type": "ansible-local",
+  "playbook_file": "{{user `ami_profile`}}.yml",
+  "group_vars": "group_vars",
+  "staging_directory":"/tmp/ansible-packer"
+}
+  ]
+}
