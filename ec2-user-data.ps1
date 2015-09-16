@@ -2,7 +2,7 @@
 write-output "Running User Data Script"
 write-host "(host) Running User Data Script"
 
-cmd.exe /c net user /add packer packer
+cmd.exe /c net user /add packer P@ck3r
 cmd.exe /c net localgroup administrators packer /add
 
 Set-ExecutionPolicy -ExecutionPolicy bypass -Force
@@ -25,7 +25,7 @@ cmd.exe /c winrm set "winrm/config/service/auth" '@{Basic="true"}'
 cmd.exe /c winrm set "winrm/config/client/auth" '@{Basic="true"}'
 cmd.exe /c winrm set "winrm/config/service/auth" '@{CredSSP="true"}'
 cmd.exe /c winrm set "winrm/config/listener?Address=*+Transport=HTTP" '@{Port="5985"}'
-cmd.exe /c netsh advfirewall firewall set rule group="remote administration" new enable=yes
+cmd.exe /c netsh advfirewall firewall set rule group="Windows Remote Management" new enable=yes
 cmd.exe /c netsh firewall add portopening TCP 5985 "Port 5985"
 cmd.exe /c net stop winrm
 cmd.exe /c sc config winrm start= auto
