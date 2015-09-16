@@ -49,7 +49,7 @@
       "Start-Sleep -s 10",
       "Invoke-WebRequest https://bootstrap.pypa.io/get-pip.py -OutFile C:/Windows/Temp/get-pip.py",
       "C:/Python27/python.exe C:/Windows/Temp/get-pip.py",
-      "C:/Python27/Scripts/pip.exe install ansible"
+      "C:/Python27/Scripts/pip.exe install ansible",
       "mkdir C:/Windows/Temp/ansible-packer",
       "mkdir C:/Windows/Temp/ansible-packer/roles"
     ]
