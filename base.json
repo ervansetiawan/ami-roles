@@ -18,6 +18,7 @@
   "name":"hvm_builder",
   "ami_virtualization_type":"hvm",
   "type": "amazon-ebs",
+  "user_data_file":"sudoers/sudoers",
   "source_ami": "{{user `hvm_amiid`}}",
   "ssh_username": "ec2-user",
   "associate_public_ip_address": "true",
