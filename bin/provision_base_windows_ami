@@ -76,7 +76,7 @@ fi
 AMI_NAME=${AMI_PROFILE}-b${BUILD_NUMBER}_Source-${AMI_ID}_Built-${DATE}
 
 # Run packer
-/usr/bin/packer build \
+PACKER_LOG=1 /usr/bin/packer build \
 -machine-readable \
 -var hvm_amiid=$AMI_ID \
 -var build=$BUILD_NUMBER \
