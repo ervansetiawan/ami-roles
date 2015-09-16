@@ -24,8 +24,8 @@ fi
 ## Launch Instance
 
 aws ec2 run-instances \
---count=$SWARM_COUNT \
 --no-dry-run \
+--count $SWARM_COUNT \
 --image-id $AMI_ID \
 --instance-type $INSTANCE_TYPE \
 --key-name $SSH_KEY \
