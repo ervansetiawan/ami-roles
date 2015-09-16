@@ -12,59 +12,58 @@
     "vpc_id":"",
     "instance_type":""
   },
-"builders":[
-
-{
-  "name":"hvm_builder",
-  "ami_virtualization_type":"hvm",
-  "type": "amazon-ebs",
-  "source_ami": "{{user `hvm_amiid`}}",
-  "communicator": "winrm",
-  "winrm_username": "Administrator",
-  "associate_public_ip_address": "true",
-  "subnet_id":"{{user `subnet_id`}}",
-  "instance_type": "{{user `instance_type`}}",
-  "security_group_id":"{{user `security_group_id`}}",
-  "vpc_id":"{{user `vpc_id`}}",
-  "ami_name": "{{user `ami_profile`}}_build-{{user `build`}}_Source-{{user `hvm_amiid`}}_Built-{{user `date`}}",
-  "region":"{{user `region`}}",
-  "tags": {
-    "Name":"{{user `ami_profile`}}-{{user `build`}}",
-    "source":"{{user `hvm_amiid`}}",
-    "virtualization_type":"hvm",
-    "build":"{{user `build`}}",
-    "profile":"{{user `ami_profile`}}",
-    "creator":"packer",
-    "creation_time":"{{user `date`}}"
-  }
-}
-],
-"provisioners":[
-
-  {"type":"shell",
-  "inline":[
-  "sleep 90"
-  ]
-  },
+  "builders":[
+    {
+      "name":"hvm_builder",
+      "ami_virtualization_type":"hvm",
+      "type": "amazon-ebs",
+      "source_ami": "{{user `hvm_amiid`}}",
+      "communicator": "winrm",
+      "ssh_port": "5985",
+      "winrm_port": "5985",
+      "winrm_username": "Administrator",
+      "associate_public_ip_address": "true",
+      "subnet_id":"{{user `subnet_id`}}",
+      "instance_type": "{{user `instance_type`}}",
+      "security_group_id":"{{user `security_group_id`}}",
+      "vpc_id":"{{user `vpc_id`}}",
+      "ami_name": "{{user `ami_profile`}}_build-{{user `build`}}_Source-{{user `hvm_amiid`}}_Built-{{user `date`}}",
+      "region":"{{user `region`}}",
+      "tags": {
+        "Name":"{{user `ami_profile`}}-{{user `build`}}",
+        "source":"{{user `hvm_amiid`}}",
+        "virtualization_type":"hvm",
+        "build":"{{user `build`}}",
+        "profile":"{{user `ami_profile`}}",
+        "creator":"packer",
+        "creation_time":"{{user `date`}}"
+      }
+    }
+  ],
+  "provisioners":[
   {
-    "type":"shell",
-    "inline_shebang":"/bin/bash",
+    "type":"powershell",
     "inline":[
-    "sudo pip install ansible",
-    "mkdir -p /tmp/ansible-packer/roles",
-    "sudo chmod 777 /tmp/ansible-packer/roles"
+      "Invoke-WebRequest https://www.python.org/ftp/python/2.7.10/python-2.7.10.msi -OutFile C:/Windows/Temp",
+      "msiexec /qn /i C:/Windows/Temp/python.msi",
+      "Start-Sleep -s 10",
+      "Invoke-WebRequest https://bootstrap.pypa.io/get-pip.py -OutFile C:/Windows/Temp/get-pip.py",
+      "C:/Python27/python.exe C:/Windows/Temp/get-pip.py",
+      "C:/Python27/Scripts/pip.exe install ansible"
+      "mkdir C:/Windows/Temp/ansible-packer",
+      "mkdir C:/Windows/Temp/ansible-packer/roles"
     ]
   },
-{
-  "type": "file",
-  "source":"roles/",
-  "destination": "/tmp/ansible-packer/roles"
-},
-{
-  "type": "ansible-local",
-  "playbook_file": "{{user `ami_profile`}}.yml",
-  "group_vars": "group_vars",
-  "staging_directory":"/tmp/ansible-packer"
-}
+  {
+    "type": "file",
+    "source":"roles/",
+    "destination": "C:/Windows/Temp/ansible-packer/roles"
+  },
+  {
+    "type": "ansible-local",
+    "playbook_file": "{{user `ami_profile`}}.yml",
+    "group_vars": "group_vars",
+    "staging_directory":"/tmp/ansible-packer"
+  }
   ]
 }
