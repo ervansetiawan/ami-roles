@@ -24,6 +24,7 @@ fi
 ## Launch Instance
 
 aws ec2 run-instances \
+--count=$SWARM_COUNT \
 --no-dry-run \
 --image-id $AMI_ID \
 --instance-type $INSTANCE_TYPE \
