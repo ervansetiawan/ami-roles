@@ -29,7 +29,7 @@ aws ec2 run-instances \
 --image-id $AMI_ID \
 --instance-type $INSTANCE_TYPE \
 --key-name $SSH_KEY \
---region=$AWS_REGION \
---security-groups=$SECURITY_GROUPS
+--region $AWS_REGION \
+--security-groups $SECURITY_GROUPS
 
 echo "Launching sensu-server instance with AMI ID of " $AMI_ID "into" $AWS_REGION
