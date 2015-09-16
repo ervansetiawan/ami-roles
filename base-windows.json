@@ -15,7 +15,6 @@
   "builders":[
     {
       "name":"hvm_builder",
-      "ami_virtualization_type":"hvm",
       "user_data_file": "ec2-user-data.ps1",
       "type": "amazon-ebs",
       "source_ami": "{{user `hvm_amiid`}}",
