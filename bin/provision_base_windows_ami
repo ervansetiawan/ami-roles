@@ -63,7 +63,7 @@ if [[ ! "$AMI_PARENT" == ami-* ]]; then
   |tail -n1|grep ami|cut -f2 -d':')
   if [[ ! "$AMI_ID" == *ami-* ]]; then
     echo "Unable to lookup AMI to launch, using default ami-d5c5d1e5"
-    AMI_ID="ami-f9cedbc9"
+    AMI_ID="ami-4dbcb67d"
   fi
 else
   AMI_ID=$AMI_PARENT
