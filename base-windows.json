@@ -45,16 +45,12 @@
       "type":"powershell",
       "inline":[
         "Invoke-WebRequest http://download.microsoft.com/download/7/9/6/796EF2E4-801B-4FC4-AB28-B59FBF6D907B/VCForPython27.msi -OutFile C:/Users/Administrator/vcpy27.msi",
-        "msiexec /qn /i C:\\Users\\Administrator\\vcpy27.msi",
-        "Start-Sleep -s 30",
+        "Start-Process C:\\Users\\Administrator\\vcpy27.msi /passive -Wait",
         "Invoke-WebRequest https://www.python.org/ftp/python/2.7.10/python-2.7.10.msi -OutFile C:/Users/Administrator/python.msi",
-        "msiexec /qn /i C:\\Users\\Administrator\\python.msi TARGETDIR=C:\\Python27",
-        "Start-Sleep -s 30",
-        "Invoke-WebRequest https://bootstrap.pypa.io/get-pip.py -OutFile C:/Users/Administrator/get-pip.py",
-        "C:/Python27/python.exe C:/Users/Administrator/get-pip.py",
-        "C:/Python27/Scripts/pip.exe install ansible",
-        "mkdir C:/Users/Administrator/ansible-packer",
-        "mkdir C:/Users/Administrator/ansible-packer/roles"
+        "Start-Process C:\\Users\\Administrator\\python.msi /passive -Wait",
+        "C:\\Python27\\Scripts\\pip.exe install ansible",
+        "mkdir C:\\Users\\Administrator\\ansible-packer",
+        "mkdir C:\\Users\\Administrator\\ansible-packer\\roles"
       ]
     },
     {
