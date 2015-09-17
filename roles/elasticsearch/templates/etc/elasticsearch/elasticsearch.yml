@@ -1,0 +1,43 @@
+---
+# elasticsearch.yml
+# {{ansible_managed}}
+cluster:
+    name: CLASSIFIED #CLOUD_APP
+#    zone: EC2_AVAIL
+#    routing:
+#      allocation:
+#        awareness:
+#          attributes: zone
+
+index:
+  number_of_shards: SHARDS
+  index.number_of_replicas: {{ replicas }}
+  store.throttle.type: none
+
+cloud:
+    aws:
+      region: EC2_REGION
+    node:
+      auto_attributes: true
+
+discovery:
+    type: ec2
+    ec2:
+      groups: CLASSIFIED
+      any_group: false
+      ping_timeout: 30s
+    zen:
+      minimum_master_nodes: 2
+
+node:
+  data: ROLEDATA
+  master: ROLEMASTER
+  name: NODE_NAME
+
+http:
+  max_content_length: 1000mb
+  cors.allow-origin: "/.*/"
+  cors.enabled: true
+
+bootstrap:
+  mlockall: true

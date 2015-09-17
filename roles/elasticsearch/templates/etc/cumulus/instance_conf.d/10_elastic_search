@@ -1,0 +1,64 @@
+#!/bin/bash -x
+DATA=/{{ es_data }}
+
+
+if [[ -f {{ user_data }} ]]; then
+  . {{ user_data }}
+fi
+
+# Wait for registration
+sleep 90
+
+# Get instance size
+instance_type=$(/opt/aws/bin/ec2-metadata -t|cut -f2 -d ' ')
+EC2_AVAIL=$(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone/)
+
+# Node name
+NODE_NAME=$(curl -s http://169.254.169.254/latest/meta-data/instance-id/)
+# Set Region in Elastic Search config
+# Add this if we really need sub environment supported -e "s/CLOUD_DEV_PHASE/$CLOUD_DEV_PHASE/"
+# Set cluster name to CLOUD_APP
+# Search by Security Group Name 
+sed -i -e "s/NODE_NAME/$NODE_NAME/" -e "s/EC2_REGION/$EC2_REGION/" -e"s/EC2_AVAIL/$EC2_AVAIL/" -e "s/CLOUD_APP/$CLOUD_APP/g" -e "s/CLASSIFIED/$SG_GROUP/g" -e "s/SHARDS/$SHARDS/g" /etc/elasticsearch/elasticsearch.yml
+
+if [[ "$ROLE" == "master" ]]; then
+  sed -i -e "s/ROLEDATA/false/" -e "s/ROLEMASTER/true/" /etc/elasticsearch/elasticsearch.yml
+elif [[ "$ROLE" == "data" ]]; then
+  sed -i -e "s/ROLEDATA/true/" -e "s/ROLEMASTER/false/" /etc/elasticsearch/elasticsearch.yml
+elif [[ "$ROLE" == "client" ]]; then
+  sed -i -e "s/ROLEDATA/false/" -e "s/ROLEMASTER/false/" /etc/elasticsearch/elasticsearch.yml 
+else
+  sed -i -e "s/ROLEDATA/true/" -e "s/ROLEMASTER/true/" /etc/elasticsearch/elasticsearch.yml
+fi
+
+
+
+# Update sysctl.conf with vm.max_map_count recommended setting.
+echo "" >> /etc/sysctl.conf
+echo "vm.max_map_count=262144" >> /etc/sysctl.conf
+
+# Cheap hack to make sure device not busy
+/sbin/udevadm control --stop-exec-queue
+mdadm --create /dev/md0 --level=0 --name=esdata0 --raid-devices=4 /dev/xvdb /dev/xvdc /dev/xvdd /dev/xvde
+mkfs.ext4 -L esdata0 /dev/md0
+udevadm control --start-exec-queue
+
+#/sbin/pvcreate /dev/xvdb
+#/sbin/vgcreate elasticsearch-vg0 /dev/xvdb
+#EXTENTS=`/sbin/vgdisplay | grep "Total PE" | sed -e 's/Total PE//g' | tr -d " \t\n\r"`
+
+#/sbin/lvcreate --name elasticsearch-lv0 -l $EXTENTS elasticsearch-vg0
+#/sbin/mkfs.ext4 /dev/elasticsearch-vg0/elasticsearch-lv0
+
+mkdir -p $DATA
+#echo "/dev/elasticsearch-vg0/elasticsearch-lv0 $DATA ext4 defaults,noatime 0 0" >> /etc/fstab
+echo "LABEL=esdata0 $DATA ext4 defaults,noatime 0 0" >> /etc/fstab
+/bin/mount -a
+
+
+# Elastic Search directories
+mkdir -p $DATA/{tmp,logs}
+chown -R elasticsearch:elasticsearch $DATA
+
+chkconfig elasticsearch on
+/etc/init.d/elasticsearch start

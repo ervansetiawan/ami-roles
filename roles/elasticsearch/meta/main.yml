@@ -1,0 +1,5 @@
+---
+
+dependencies:
+- cli53
+- elasticsearch-pip

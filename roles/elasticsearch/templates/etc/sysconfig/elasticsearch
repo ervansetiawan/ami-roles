@@ -1,0 +1,66 @@
+# /etc/sysconfig/elasticsearch
+# {{ansible_managed}}
+
+
+## Define Heap sizes
+
+# Percent of total sytem memory to use
+xmx_percent={{ xmx_percent }}
+#xms_percent={{ xms_percent }}
+
+# Total system memory available
+system_memory_in_mb=$(free -m | awk '/Mem:/ {print $2}')
+
+# Xmx
+xmx_memory_float=$(echo "$system_memory_in_mb*$xmx_percent"|bc)
+xmx_memory=$(echo "($xmx_memory_float+0.5)/1" | bc)
+
+# Xms
+#xms_memory_float=$(echo "$system_memory_in_mb*$xms_percent"|bc)
+#xms_memory=$(echo "($xms_memory_float+0.5)/1" | bc)
+
+
+
+# Directory where the ElasticSearch binary distribution resides
+ES_HOME=/usr/share/elasticsearch
+
+# Heap Size (defaults to 256m min, 1g max)
+ES_HEAP_SIZE=${xmx_memory}m
+
+# Heap new generation
+#ES_HEAP_NEWSIZE=
+
+# max direct memory
+#ES_DIRECT_SIZE=
+
+# Additional Java OPTS
+#ES_JAVA_OPTS=
+
+# Maximum number of open files
+MAX_OPEN_FILES=65535
+
+# Maximum amount of locked memory
+MAX_LOCKED_MEMORY=unlimited
+
+# ElasticSearch log directory
+LOG_DIR=/{{es_data}}/logs
+
+# ElasticSearch data directory
+DATA_DIR=/{{es_data}}
+
+# ElasticSearch work directory
+WORK_DIR=/{{es_data}}/tmp
+
+# ElasticSearch conf directory
+CONF_DIR=/etc/elasticsearch
+
+# ElasticSearch configuration file (elasticsearch.yml)
+CONF_FILE=/etc/elasticsearch/elasticsearch.yml
+
+# User to run as, change this to a specific elasticsearch user if possible
+# Also make sure, this user can write into the log directories in case you change them
+# This setting only works for the init script, but has to be configured separately for systemd startup
+ES_USER=elasticsearch
+
+# Configure restart on package upgrade (true, every other setting will lead to not restarting)
+#RESTART_ON_UPGRADE=true

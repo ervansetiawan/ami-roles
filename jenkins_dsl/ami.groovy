@@ -44,9 +44,14 @@ def amis = [  "ami-base":
                   "ami_profile":"etcd",
                   "ami_parent":"base",                  
                   "job_tag":"build"
+                ],
+              "ami-elasticsearch": 
+                [ "repo": ["https://github.com/daltonconley/ami-roles.git", "master"],
+                  "name":"elasticsearch",
+                  "ami_profile":"elasticsearch",
+                  "ami_parent":"base",                  
+                  "job_tag":"build"
                 ]
-
-
             ]
 
 

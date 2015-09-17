@@ -1,0 +1,8 @@
+---
+
+- name: Install elasticsearch pythong SDK
+  pip: name=elasticsearch
+  tags:
+    - system
+    - elasticsearch
+    - build

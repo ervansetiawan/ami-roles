@@ -1,0 +1,16 @@
+---
+
+# https://github.com/barnybug/cli53
+- name: Install Route53 
+  pip: name=cli53
+  tags:
+    - system
+    - build
+    - cli53
+
+- name: Link to usr/bin
+  file: src=/usr/local/bin/cli53 dest=/usr/bin/cli53 state=link owner=root group=root
+  tags:
+    - system
+    - build
+    - cli53

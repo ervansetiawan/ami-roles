@@ -1,0 +1,4 @@
+[elasticsearch]
+role=elasticsearch
+elasticsearch_version={{ es_version }}
+

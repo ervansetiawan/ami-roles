@@ -1,0 +1,37 @@
+---
+
+es_home: "{{ reuters_apps }}/elasticsearch"
+es_data: "{{ reuters_data }}/elasticsearch"
+
+# Elastic Search Version
+es_version: 1.5.2
+
+## Elastic Search
+#http://www.elasticsearch.org/download/
+es_url: https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-{{ es_version }}.noarch.rpm
+
+#### Plugins
+## AWS Discovery
+# https://github.com/elasticsearch/elasticsearch-cloud-aws
+ec2_version: 2.5.0
+
+## ICU
+icu_version: 2.5.0
+
+#  clustername
+clusterName: graylog-es-1.4.4-cluster
+
+# number of shards
+shards: 3
+# number of replicas
+replicas: 1
+
+# /etc/sysconfig/elasticsearch
+xmx_percent: .5
+xms_percent: .2
+
+
+## EC2
+# Security Group ES will use to search for cluster nodes
+esSecurityGroup: "{{ clusterName }}"
+
