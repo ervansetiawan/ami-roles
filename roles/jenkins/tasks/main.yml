@@ -7,6 +7,11 @@
   - jenkins
   - build
 
+- name: Install pywinrm
+  pip: name=https://github.com/diyan/pywinrm/archive/master.zip#egg=pywinrm
+  tags:
+    - build
+
 - name: Add Jenkins repo GPG key
   command: rpm --import {{ jenkins_repo_key_url }}
   tags:

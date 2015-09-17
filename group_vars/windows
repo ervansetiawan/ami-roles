@@ -1,0 +1,6 @@
+---
+
+ansible_ssh_user: packer
+ansible_ssh_pass: P@ck3r
+ansible_ssh_port: 5986
+ansible_connection: winrm
