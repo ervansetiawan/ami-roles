@@ -1,52 +1,46 @@
 // file: jenkins_dsl/ami.groovy
 //
 
-// JDK to use configured in Jenkins global settings
-def jdkType = "Slave_Oracle_JDK8"
-
 // Jenkins Slave swarm to use
 def swarm = "packer"
 
-// Authentication Token to Trigger builds remotely
-def authenticationToken = "IAMTHOMSONREUTERS"
-
 def amis = [  "ami-base": 
-                [ "repo": ["https://github.com/daltonconley/ami-roles.git", "master"],
+                [ "repo": ["https://git.sami.int.thomsonreuters.com/dalton.conley/ami-roles.git", "master"],
                   "name":"base",
                   "ami_profile":"base",
                   "ami_parent":"amazon_linux",
                   "job_tag":"build"
                 ],
               "ami-jenkins": 
-                [ "repo": ["https://github.com/daltonconley/ami-roles.git", "master"],
+                [ "repo": ["https://git.sami.int.thomsonreuters.com/dalton.conley/ami-roles.git", "master"],
                   "name":"jenkins",
                   "ami_profile":"jenkins",
                   "ami_parent":"base",                  
                   "job_tag":"build"
                 ],                
               "ami-jenkins-slave": 
-                [ "repo": ["https://github.com/daltonconley/ami-roles.git", "master"],
+                [ "repo": ["https://git.sami.int.thomsonreuters.com/dalton.conley/ami-roles.git", "master"],
                   "name":"jenkins-slave",
                   "ami_profile":"jenkins-slave",
                   "ami_parent":"base",                  
                   "job_tag":"build"
                 ],            
               "ami-bastion": 
-                [ "repo": ["https://github.com/daltonconley/ami-roles.git", "master"],
+                [ "repo": ["https://git.sami.int.thomsonreuters.com/dalton.conley/ami-roles.git", "master"],
                   "name":"bastion",
                   "ami_profile":"bastion",
                   "ami_parent":"base",                  
                   "job_tag":"build"    
                 ],           
               "ami-etcd":
-                [ "repo": ["https://github.com/daltonconley/ami-roles.git", "master"],
+                [ "repo": ["https://git.sami.int.thomsonreuters.com/dalton.conley/ami-roles.git", "master"],
                   "name":"etcd",
                   "ami_profile":"etcd",
                   "ami_parent":"base",                  
                   "job_tag":"build"
                 ],
               "ami-elasticsearch": 
-                [ "repo": ["https://github.com/daltonconley/ami-roles.git", "master"],
+                [ "repo": ["https://git.sami.int.thomsonreuters.com/dalton.conley/ami-roles.git", "master"],
                   "name":"elasticsearch",
                   "ami_profile":"elasticsearch",
                   "ami_parent":"base",                  
@@ -67,10 +61,6 @@ def jobname = "ami-" + ami.name
       githubPush()
     }
 
-    configure { project ->
-      project / 'authToken' (authenticationToken){}
-    }
-
     steps {
       shell("bin/provision_base_ami")
     }
@@ -81,7 +71,7 @@ def jobname = "ami-" + ami.name
         remote {
           url(ami.repo.get(0))
           branch(ami.repo.get(1))
-          credentials('tripscloud Github')
+          credentials('635eba32-69cb-4eb7-a8e9-0ae209cf3706')
         }
       }
     }
