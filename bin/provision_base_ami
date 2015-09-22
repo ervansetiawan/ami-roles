@@ -58,7 +58,7 @@ fi
 # That would be either the latest snapshot or stable
 if [[ ! "$AMI_PARENT" == ami-* ]]; then
   # Lookup the latest successful build, and AMI output from the parent profile
-  BUILD_HOST=ec2-52-27-227-44.us-west-2.compute.amazonaws.com:8080
+  BUILD_HOST=buildserver2.amers1.cis.trcloud/jenkins
   AMI_ID=$(curl -s http://${BUILD_HOST}/job/ami-${AMI_PARENT}/lastSuccessfulBuild/artifact/AMI-${AMI_PARENT}/*view*/ \
   |tail -n1|grep ami|cut -f2 -d':')
   if [[ ! "$AMI_ID" == *ami-* ]]; then
