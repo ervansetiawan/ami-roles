@@ -1,5 +1,7 @@
 #!/bin/bash -ex
 
+. ~/.bash_profile
+
 ## Build AMI using Packer
 
 # All .yml in running dir
