@@ -53,8 +53,6 @@ amis.values().each { ami ->
 def jobname = "ami-" + ami.name
   
   freeStyleJob(jobname) {
-
-    jdk(jdkType)
     label(swarm)
 
     triggers {
