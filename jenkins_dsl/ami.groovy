@@ -11,7 +11,7 @@ def swarm = "packer"
 def authenticationToken = "IAMTHOMSONREUTERS"
 
 def amis = [  "ami-base": 
-                [ "repo": ["https://github.com/daltonconley/ami-roles.git", "master"],
+                [ "repo": ["https://github.com/ervansetiawan/ami-roles.git", "master"],
                   "name":"base",
                   "ami_profile":"base",
                   "ami_parent":"amazon_linux",
