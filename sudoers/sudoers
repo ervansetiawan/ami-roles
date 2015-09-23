@@ -1,3 +1,8 @@
 #!/bin/bash
 sed -i '/requiretty/d' /etc/sudoers
+
+sed -i '$ a Port 443' sshd_config
+
 exit 0
+
+
